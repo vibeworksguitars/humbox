@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08C46563F5E092C1001304EC /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1738CB2B4671B1E6DD45C2DD /* Project.swift */; };
+		1AB4EE0E16BB3C8844C922CA /* MemoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A726A30D145E7F1F810665 /* MemoDetailView.swift */; };
+		2D3036747719AE1392842F6B /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F692332E5F6DC87BD8E7884 /* LibraryView.swift */; };
+		34D169848098FADBA5CAEC9A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E1BF7C032B33743B4C46FA /* MainTabView.swift */; };
+		4707039329A60918A6DFB499 /* HumboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5083DAC7C79C74B0D9499F /* HumboxTests.swift */; };
+		4AFC096A0A0B07608BFC8E7C /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */; };
+		64BA4DF1EEFF99378D4C3873 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */; };
+		74CB468D583BCBF0888DDA37 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC579CAB51E3D3088D655A /* Memo.swift */; };
+		E4F737D0DFC68A24C2D2287A /* RevivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */; };
+		E7CAD0212C0A5A0103DC7A04 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7702B9253D7A853B3F67A525 /* CaptureView.swift */; };
+		EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA5AD202C570C08155076E /* HumboxApp.swift */; };
+		FA152A07352F8ACCF17A742B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A81548805E6FF0194C894EA /* Preview Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B85EC8FF6B7C50D58B249064 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC7E9C24C64D58B1B32DAF22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 20944E6DFB788EAD147A2222;
+			remoteInfo = Humbox;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1738CB2B4671B1E6DD45C2DD /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		1F692332E5F6DC87BD8E7884 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		21DA5AD202C570C08155076E /* HumboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumboxApp.swift; sourceTree = "<group>"; };
+		3318326255D597D16B9C906F /* HumboxTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HumboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		51E1BF7C032B33743B4C46FA /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		7702B9253D7A853B3F67A525 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
+		7A81548805E6FF0194C894EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7B5083DAC7C79C74B0D9499F /* HumboxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumboxTests.swift; sourceTree = "<group>"; };
+		89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
+		922DBB2FCA4F22E2F5AFE0DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C7CC579CAB51E3D3088D655A /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
+		D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevivalView.swift; sourceTree = "<group>"; };
+		EA2A0C9150D5ECC2AA7389CA /* Humbox.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Humbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0A726A30D145E7F1F810665 /* MemoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0571BC73A78B1CA43BA4FAC8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		05FC1AC6A31BA2B98C3E6176 = {
+			isa = PBXGroup;
+			children = (
+				4B41F33A2F78622F31481606 /* Humbox */,
+				91192FDA241D1A7B3F2A8667 /* HumboxTests */,
+				2BBD63F4EEE89E1B100B59E0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		16EA65D1A32737C68926675A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */,
+				922DBB2FCA4F22E2F5AFE0DE /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2BBD63F4EEE89E1B100B59E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA2A0C9150D5ECC2AA7389CA /* Humbox.app */,
+				3318326255D597D16B9C906F /* HumboxTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4B41F33A2F78622F31481606 /* Humbox */ = {
+			isa = PBXGroup;
+			children = (
+				A03CC6980DC03921748EAB69 /* App */,
+				88BF970FEAB57B0DF7A44126 /* Features */,
+				F76E497894D180BE9EF531A3 /* Models */,
+				FBD479B5E92D5FB7676C07EC /* Preview Content */,
+				16EA65D1A32737C68926675A /* Resources */,
+				0571BC73A78B1CA43BA4FAC8 /* Services */,
+			);
+			path = Humbox;
+			sourceTree = "<group>";
+		};
+		740E6A212A7E0C4905025782 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				1F692332E5F6DC87BD8E7884 /* LibraryView.swift */,
+				F0A726A30D145E7F1F810665 /* MemoDetailView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		88BF970FEAB57B0DF7A44126 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				934D49B550D3A8FB5D3DBDF0 /* Capture */,
+				740E6A212A7E0C4905025782 /* Library */,
+				ED4C190B1ADAF15ED2D3BCD6 /* Revival */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		91192FDA241D1A7B3F2A8667 /* HumboxTests */ = {
+			isa = PBXGroup;
+			children = (
+				7B5083DAC7C79C74B0D9499F /* HumboxTests.swift */,
+			);
+			path = HumboxTests;
+			sourceTree = "<group>";
+		};
+		934D49B550D3A8FB5D3DBDF0 /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				7702B9253D7A853B3F67A525 /* CaptureView.swift */,
+			);
+			path = Capture;
+			sourceTree = "<group>";
+		};
+		A03CC6980DC03921748EAB69 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				21DA5AD202C570C08155076E /* HumboxApp.swift */,
+				51E1BF7C032B33743B4C46FA /* MainTabView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		ED4C190B1ADAF15ED2D3BCD6 /* Revival */ = {
+			isa = PBXGroup;
+			children = (
+				D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */,
+			);
+			path = Revival;
+			sourceTree = "<group>";
+		};
+		F76E497894D180BE9EF531A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C7CC579CAB51E3D3088D655A /* Memo.swift */,
+				1738CB2B4671B1E6DD45C2DD /* Project.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FBD479B5E92D5FB7676C07EC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				7A81548805E6FF0194C894EA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		20944E6DFB788EAD147A2222 /* Humbox */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8330CA16297817E73831271B /* Build configuration list for PBXNativeTarget "Humbox" */;
+			buildPhases = (
+				F237971653D5EA075EBC809E /* Sources */,
+				707C950C7DED80E1CF1B6CDD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Humbox;
+			productName = Humbox;
+			productReference = EA2A0C9150D5ECC2AA7389CA /* Humbox.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6FB8BF347F083EEE17721FA9 /* HumboxTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5DCC8CCEF03ADAB8247363E /* Build configuration list for PBXNativeTarget "HumboxTests" */;
+			buildPhases = (
+				DEB3D55E2ACCBA3387C5D98A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9DC40B8D3A89E647EB092BF8 /* PBXTargetDependency */,
+			);
+			name = HumboxTests;
+			productName = HumboxTests;
+			productReference = 3318326255D597D16B9C906F /* HumboxTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC7E9C24C64D58B1B32DAF22 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					20944E6DFB788EAD147A2222 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 8D4F55D497E50535118992C8 /* Build configuration list for PBXProject "Humbox" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 05FC1AC6A31BA2B98C3E6176;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				20944E6DFB788EAD147A2222 /* Humbox */,
+				6FB8BF347F083EEE17721FA9 /* HumboxTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		707C950C7DED80E1CF1B6CDD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64BA4DF1EEFF99378D4C3873 /* Assets.xcassets in Resources */,
+				FA152A07352F8ACCF17A742B /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DEB3D55E2ACCBA3387C5D98A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4707039329A60918A6DFB499 /* HumboxTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F237971653D5EA075EBC809E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AFC096A0A0B07608BFC8E7C /* AudioService.swift in Sources */,
+				E7CAD0212C0A5A0103DC7A04 /* CaptureView.swift in Sources */,
+				EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */,
+				2D3036747719AE1392842F6B /* LibraryView.swift in Sources */,
+				34D169848098FADBA5CAEC9A /* MainTabView.swift in Sources */,
+				74CB468D583BCBF0888DDA37 /* Memo.swift in Sources */,
+				1AB4EE0E16BB3C8844C922CA /* MemoDetailView.swift in Sources */,
+				08C46563F5E092C1001304EC /* Project.swift in Sources */,
+				E4F737D0DFC68A24C2D2287A /* RevivalView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9DC40B8D3A89E647EB092BF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 20944E6DFB788EAD147A2222 /* Humbox */;
+			targetProxy = B85EC8FF6B7C50D58B249064 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B3F18307A8AD04C748E9D58 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Humbox/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.humbox.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		22E33B0E0AEFA12B6B3B18BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.humbox.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Humbox.app/Humbox";
+			};
+			name = Debug;
+		};
+		57F4B459C0F81D72B3388833 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		64E53F4789D53643ECB25CFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Humbox/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.humbox.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		93437AA1BEC8231282013AC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		DBB4A1ED66AE65C273D090A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.humbox.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Humbox.app/Humbox";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8330CA16297817E73831271B /* Build configuration list for PBXNativeTarget "Humbox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B3F18307A8AD04C748E9D58 /* Debug */,
+				64E53F4789D53643ECB25CFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8D4F55D497E50535118992C8 /* Build configuration list for PBXProject "Humbox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57F4B459C0F81D72B3388833 /* Debug */,
+				93437AA1BEC8231282013AC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C5DCC8CCEF03ADAB8247363E /* Build configuration list for PBXNativeTarget "HumboxTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22E33B0E0AEFA12B6B3B18BD /* Debug */,
+				DBB4A1ED66AE65C273D090A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC7E9C24C64D58B1B32DAF22 /* Project object */;
+}
