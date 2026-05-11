@@ -5,6 +5,7 @@ struct MemoDetailView: View {
     @EnvironmentObject private var audio: AudioService
     @State private var isPlaying = false
     @State private var playProgress: CGFloat = 0
+    @State private var showExportSheet = false
 
     var body: some View {
         ScrollView {
@@ -67,7 +68,7 @@ struct MemoDetailView: View {
                     .tint(.primary)
 
                     Button {
-                        // TODO: export sheet
+                        showExportSheet = true
                     } label: {
                         Label("Export", systemImage: "square.and.arrow.up")
                             .frame(maxWidth: .infinity)
@@ -79,6 +80,9 @@ struct MemoDetailView: View {
             .padding()
         }
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showExportSheet) {
+            ExportSheet(memo: memo)
+        }
     }
 }
 
