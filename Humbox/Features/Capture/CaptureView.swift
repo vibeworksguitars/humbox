@@ -2,7 +2,17 @@ import SwiftUI
 
 struct CaptureView: View {
     @EnvironmentObject private var audio: AudioService
+    @EnvironmentObject private var store: StoreService
     @State private var showPermissionAlert = false
+    @State private var showPaywall = false
+
+    private var atCap: Bool {
+        !store.isPro && audio.memos.count >= StoreService.freeRecordingCap
+    }
+
+    private var remainingFree: Int {
+        max(0, StoreService.freeRecordingCap - audio.memos.count)
+    }
 
     var body: some View {
         NavigationStack {
@@ -11,41 +21,64 @@ struct CaptureView: View {
 
                 // Prompt
                 VStack(spacing: 4) {
-                    Text(audio.isRecording ? "Recording…" : "Ready when you are")
+                    Text(audio.isRecording ? "Recording…" : (atCap ? "Free limit reached" : "Ready when you are"))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     if !audio.isRecording {
-                        Text("Tap to capture · long-press for buffer")
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
+                        if atCap {
+                            Text("Upgrade to keep capturing")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        } else {
+                            Text("Tap to capture · long-press for buffer")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        }
                     }
                 }
 
                 Spacer()
 
-                // Big red button
+                // Big red button — dims and shows lock when at cap
                 RecordButton(
                     isRecording: audio.isRecording,
-                    levels: audio.currentLevels
+                    levels: audio.currentLevels,
+                    locked: atCap
                 ) {
-                    Task { await handleTap() }
+                    if atCap {
+                        showPaywall = true
+                    } else {
+                        Task { await handleTap() }
+                    }
                 }
 
                 Spacer()
 
-                // Buffer toggle
-                BufferToggle(enabled: $audio.bufferEnabled)
-                    .padding(.bottom, 8)
-
-                // Last captured
-                if let last = audio.memos.first {
-                    Text("Last captured · \"\(last.title)\"")
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
-                        .lineLimit(1)
-                        .padding(.horizontal)
-                        .padding(.bottom, 12)
+                // Buffer toggle (only shown to free users approaching cap or to pro users)
+                if !atCap || store.isPro {
+                    BufferToggle(enabled: $audio.bufferEnabled)
+                        .padding(.bottom, 8)
                 }
+
+                // Footer: last captured or free-tier counter
+                Group {
+                    if atCap {
+                        Button("Upgrade to Pro →") { showPaywall = true }
+                            .font(.caption)
+                            .fontWeight(.medium)
+                    } else if !store.isPro && remainingFree <= 3 {
+                        Text("\(remainingFree) free idea\(remainingFree == 1 ? "" : "s") remaining")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    } else if let last = audio.memos.first {
+                        Text("Last captured · \"\(last.title)\"")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                            .lineLimit(1)
+                            .padding(.horizontal)
+                    }
+                }
+                .padding(.bottom, 12)
             }
             .navigationTitle("Humbox")
             .navigationBarTitleDisplayMode(.inline)
@@ -58,6 +91,9 @@ struct CaptureView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("Humbox needs microphone access to capture your ideas. Enable it in Settings.")
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
             }
         }
     }
@@ -81,12 +117,12 @@ struct CaptureView: View {
 private struct RecordButton: View {
     let isRecording: Bool
     let levels: [Float]
+    let locked: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             ZStack {
-                // Pulse rings when recording
                 if isRecording {
                     ForEach(0..<3, id: \.self) { i in
                         Circle()
@@ -96,12 +132,15 @@ private struct RecordButton: View {
                 }
 
                 Circle()
-                    .fill(isRecording ? Color.red.opacity(0.85) : Color.red)
+                    .fill(locked ? Color.secondary.opacity(0.25) : (isRecording ? Color.red.opacity(0.85) : Color.red))
                     .frame(width: 140, height: 140)
-                    .shadow(color: .red.opacity(0.3), radius: isRecording ? 20 : 8)
+                    .shadow(color: locked ? .clear : .red.opacity(0.3), radius: isRecording ? 20 : 8)
 
-                if isRecording {
-                    // Live waveform
+                if locked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 36))
+                        .foregroundStyle(.secondary)
+                } else if isRecording {
                     WaveformBars(levels: levels, color: .white)
                         .frame(width: 80, height: 40)
                 } else {
@@ -119,6 +158,7 @@ private struct RecordButton: View {
         }
         .buttonStyle(.plain)
         .animation(.easeInOut(duration: 0.2), value: isRecording)
+        .animation(.easeInOut(duration: 0.2), value: locked)
     }
 }
 
@@ -175,4 +215,5 @@ struct WaveformBars: View {
 #Preview {
     CaptureView()
         .environmentObject(AudioService())
+        .environmentObject(StoreService())
 }

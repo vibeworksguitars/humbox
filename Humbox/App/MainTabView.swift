@@ -34,4 +34,5 @@ struct MainTabView: View {
 #Preview {
     MainTabView()
         .environmentObject(AudioService())
+        .environmentObject(StoreService())
 }

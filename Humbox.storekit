@@ -1,0 +1,58 @@
+{
+  "identifier" : "Humbox",
+  "nonConsumableProducts" : [],
+  "consumableProducts" : [],
+  "subscriptionGroups" : [
+    {
+      "id" : "hum-pro-group",
+      "localizations" : [],
+      "name" : "Humbox Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "hum-pro-monthly",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlimited recordings, key & BPM detection, 30-second capture buffer, revival feed, and melody-to-MIDI export.",
+              "displayName" : "Humbox Pro Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.humbox.app.pro.monthly",
+          "referenceName" : "Pro Monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "subscriptionGroupID" : "hum-pro-group",
+          "winBackOffers" : []
+        },
+        {
+          "adHocOffers" : [],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "hum-pro-yearly",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlimited recordings, key & BPM detection, 30-second capture buffer, revival feed, and melody-to-MIDI export.",
+              "displayName" : "Humbox Pro Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.humbox.app.pro.yearly",
+          "referenceName" : "Pro Yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "subscriptionGroupID" : "hum-pro-group",
+          "winBackOffers" : []
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
