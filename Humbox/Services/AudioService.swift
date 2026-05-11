@@ -113,10 +113,15 @@ final class AudioService: ObservableObject {
         let destURL = recordingsDirectory.appendingPathComponent("\(UUID().uuidString).caf")
         try? FileManager.default.copyItem(at: audioFile.url, to: destURL)
 
-        let key         = KeyFinder.detect(from: collectedPitches)
-        let bpm         = estimateBPM()
-        let contentType = classifyContent(duration: duration)
-        let title       = TitleGenerator.generate(key: key, bpm: bpm, contentType: contentType)
+        let key  = KeyFinder.detect(from: collectedPitches)
+        let bpm  = estimateBPM()
+
+        // Run SoundAnalysis on the saved file off the main thread
+        let contentType = await Task.detached(priority: .userInitiated) {
+            ContentClassifier.classify(audioFileURL: destURL)
+        }.value
+
+        let title = TitleGenerator.generate(key: key, bpm: bpm, contentType: contentType)
 
         let memo = Memo(
             fileURL: destURL,
@@ -162,20 +167,6 @@ final class AudioService: ObservableObject {
         let avg = musical.reduce(0, +) / Double(musical.count)
         let bpm = Int((60.0 / avg).rounded())
         return (40...240).contains(bpm) ? bpm : nil
-    }
-
-    // Simple heuristic: pitch count + average frequency + onset density.
-    private func classifyContent(duration: TimeInterval) -> Memo.ContentType {
-        let pitchCount   = collectedPitches.count
-        let onsetDensity = Double(onsetTimes.count) / max(1, duration)
-
-        guard pitchCount >= 5 else {
-            return onsetDensity > 3 ? .percussion : .unknown
-        }
-
-        let avgFreq = collectedPitches.reduce(0, +) / Float(pitchCount)
-        // Voice fundamentals tend to sit above ~150 Hz; guitar lower strings below 150 Hz.
-        return avgFreq < 300 ? .guitar : .humming
     }
 
     // MARK: - Playback
