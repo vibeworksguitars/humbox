@@ -43,12 +43,12 @@ struct PaywallView: View {
                             .padding()
                     } else {
                         VStack(spacing: 10) {
-                            if let yearly = store.yearly {
+                            if let lifetime = store.lifetime {
                                 PlanButton(
-                                    product: yearly,
+                                    product: lifetime,
                                     badge: "Best value",
                                     isPurchasing: isPurchasing
-                                ) { await buy(yearly) }
+                                ) { await buy(lifetime) }
                             }
                             if let monthly = store.monthly {
                                 PlanButton(
@@ -162,7 +162,7 @@ private struct PlanButton: View {
                                 .clipShape(Capsule())
                         }
                     }
-                    Text(product.displayPrice + (product.id.hasSuffix("yearly") ? " / year" : " / month"))
+                    Text(product.displayPrice + (product.id.hasSuffix("lifetime") ? " · one-time, forever" : " / month"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

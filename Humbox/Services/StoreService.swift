@@ -10,7 +10,7 @@ final class StoreService: ObservableObject {
 
     static let productIDs = [
         "com.humbox.app.pro.monthly",
-        "com.humbox.app.pro.yearly",
+        "com.humbox.app.pro.lifetime",
     ]
 
     private var transactionListener: Task<Void, Never>?
@@ -68,7 +68,7 @@ final class StoreService: ObservableObject {
 
     private func fetchProducts() async {
         products = (try? await Product.products(for: Self.productIDs)) ?? []
-        // Sort: monthly first, then yearly
+        // Sort: monthly first, lifetime second
         products.sort { $0.price < $1.price }
     }
 
@@ -103,6 +103,6 @@ final class StoreService: ObservableObject {
 // MARK: - Convenience
 
 extension StoreService {
-    var monthly: Product? { products.first { $0.id.hasSuffix("monthly") } }
-    var yearly: Product?  { products.first { $0.id.hasSuffix("yearly") } }
+    var monthly:  Product? { products.first { $0.id.hasSuffix("monthly") } }
+    var lifetime: Product? { products.first { $0.id.hasSuffix("lifetime") } }
 }
