@@ -5,6 +5,14 @@ options:
     iOS: "17.0"
   createIntermediateGroups: true
 
+packages:
+  AudioKit:
+    url: https://github.com/AudioKit/AudioKit
+    from: "5.6.0"
+  SoundpipeAudioKit:
+    url: https://github.com/AudioKit/SoundpipeAudioKit
+    from: "5.6.0"
+
 settings:
   base:
     SWIFT_VERSION: "5.9"
@@ -17,6 +25,11 @@ targets:
     platform: iOS
     sources:
       - path: Humbox
+    dependencies:
+      - package: AudioKit
+        product: AudioKit
+      - package: SoundpipeAudioKit
+        product: SoundpipeAudioKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.humbox.app

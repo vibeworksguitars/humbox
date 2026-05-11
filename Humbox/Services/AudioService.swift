@@ -1,18 +1,25 @@
+import AudioKit
+import SoundpipeAudioKit
 import AVFoundation
-import Combine
 import SwiftUI
 
 @MainActor
-final class AudioService: NSObject, ObservableObject {
+final class AudioService: ObservableObject {
     @Published var recordingState: RecordingState = .idle
     @Published var memos: [Memo] = Memo.samples
     @Published var bufferEnabled: Bool = true
-    @Published var currentLevels: [Float] = Array(repeating: 0, count: 20)
+    @Published var currentLevels: [Float] = Array(repeating: 0.05, count: 20)
 
-    private var audioSession = AVAudioSession.sharedInstance()
-    private var recorder: AVAudioRecorder?
+    private let engine = AudioEngine()
+    private var pitchTap: PitchTap?
+    private var recorder: NodeRecorder?
     private var player: AVAudioPlayer?
-    private var levelTimer: Timer?
+
+    // Data collected during each recording session
+    private var collectedPitches: [Float] = []
+    private var onsetTimes: [TimeInterval] = []
+    private var lastAmplitude: Float = 0
+    private var recordingStartTime: Date?
 
     enum RecordingState {
         case idle
@@ -29,7 +36,7 @@ final class AudioService: NSObject, ObservableObject {
 
     func requestMicrophonePermission() async -> Bool {
         await withCheckedContinuation { continuation in
-            audioSession.requestRecordPermission { granted in
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
                 continuation.resume(returning: granted)
             }
         }
@@ -40,89 +47,145 @@ final class AudioService: NSObject, ObservableObject {
     func startRecording() async {
         guard await requestMicrophonePermission() else { return }
 
+        collectedPitches = []
+        onsetTimes = []
+        lastAmplitude = 0
+        recordingStartTime = Date()
+
         do {
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
-            try audioSession.setActive(true)
+            try AVAudioSession.sharedInstance().setCategory(
+                .playAndRecord, mode: .measurement,
+                options: [.defaultToSpeaker, .allowBluetooth]
+            )
+            try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("Audio session error: \(error)")
             return
         }
 
-        let filename = "\(UUID().uuidString).m4a"
-        let url = recordingsDirectory.appendingPathComponent(filename)
+        guard let mic = engine.input else {
+            print("Microphone input unavailable")
+            return
+        }
 
-        let settings: [String: Any] = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 44100,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue,
-        ]
+        // Route mic through a silent fader so the engine has a valid output
+        // without feeding back through the speakers.
+        let silence = Fader(mic, gain: 0)
+        engine.output = silence
+
+        pitchTap = PitchTap(mic) { [weak self] pitches, amplitudes in
+            Task { @MainActor [weak self] in
+                self?.processPitchData(pitches: pitches, amplitudes: amplitudes)
+            }
+        }
 
         do {
-            recorder = try AVAudioRecorder(url: url, settings: settings)
-            recorder?.isMeteringEnabled = true
-            recorder?.record()
+            recorder = try NodeRecorder(node: mic)
+            pitchTap?.start()
+            try engine.start()
+            try recorder?.record()
             recordingState = .recording(startedAt: Date())
-            startLevelPolling()
         } catch {
-            print("Recorder error: \(error)")
+            print("Recording start error: \(error)")
+            engine.stop()
         }
     }
 
     func stopRecording() {
-        guard let recorder, isRecording else { return }
-        let url = recorder.url
-        let duration = recorder.currentTime
-        recorder.stop()
-        self.recorder = nil
-        stopLevelPolling()
+        guard isRecording else { return }
+        recorder?.stop()
+        pitchTap?.stop()
+        engine.stop()
+        currentLevels = Array(repeating: 0.05, count: 20)
         recordingState = .processing
+        Task { await processRecording() }
+    }
 
-        // Placeholder: real app would run audio analysis here
-        Task {
-            try? await Task.sleep(nanoseconds: 500_000_000)
-            let memo = Memo(
-                fileURL: url,
-                duration: duration,
-                title: "New idea — \(Date().formatted(.dateTime.hour().minute()))",
-                contentType: .unknown
-            )
-            memos.insert(memo, at: 0)
-            recordingState = .idle
+    // MARK: - Analysis pipeline
+
+    private func processRecording() async {
+        defer { recordingState = .idle }
+
+        guard let audioFile = recorder?.audioFile else { return }
+        let duration = recordingStartTime.map { Date().timeIntervalSince($0) } ?? 0
+
+        // Copy recorded CAF to our documents directory
+        let destURL = recordingsDirectory.appendingPathComponent("\(UUID().uuidString).caf")
+        try? FileManager.default.copyItem(at: audioFile.url, to: destURL)
+
+        let key         = KeyFinder.detect(from: collectedPitches)
+        let bpm         = estimateBPM()
+        let contentType = classifyContent(duration: duration)
+        let title       = TitleGenerator.generate(key: key, bpm: bpm, contentType: contentType)
+
+        let memo = Memo(
+            fileURL: destURL,
+            duration: duration,
+            title: title,
+            key: key,
+            bpm: bpm,
+            contentType: contentType
+        )
+        memos.insert(memo, at: 0)
+    }
+
+    // Called from PitchTap's background callback — dispatched to MainActor above.
+    private func processPitchData(pitches: [AUValue], amplitudes: [AUValue]) {
+        let elapsed = Date().timeIntervalSince(recordingStartTime ?? Date())
+
+        for (pitch, amp) in zip(pitches, amplitudes) {
+            // Pitched content in guitar/voice range
+            if amp > 0.02, pitch > 80, pitch < 1400 {
+                collectedPitches.append(pitch)
+            }
+            // Onset: sharp amplitude rise → likely a note attack or beat
+            if amp - lastAmplitude > 0.12 {
+                onsetTimes.append(elapsed)
+            }
+            lastAmplitude = amp
         }
+
+        // Update level bars for the UI waveform visualisation
+        let amp = amplitudes.first ?? 0
+        let norm = min(1.0, max(0.0, amp * 3.0))
+        currentLevels = (0..<20).map { _ in
+            Float.random(in: max(0.05, norm - 0.15)...min(1.0, norm + 0.15))
+        }
+    }
+
+    // Estimate BPM from inter-onset intervals.
+    private func estimateBPM() -> Int? {
+        guard onsetTimes.count >= 4 else { return nil }
+        let intervals = zip(onsetTimes, onsetTimes.dropFirst()).map { $1 - $0 }
+        let musical   = intervals.filter { $0 > 0.25 && $0 < 2.0 }
+        guard musical.count >= 3 else { return nil }
+        let avg = musical.reduce(0, +) / Double(musical.count)
+        let bpm = Int((60.0 / avg).rounded())
+        return (40...240).contains(bpm) ? bpm : nil
+    }
+
+    // Simple heuristic: pitch count + average frequency + onset density.
+    private func classifyContent(duration: TimeInterval) -> Memo.ContentType {
+        let pitchCount   = collectedPitches.count
+        let onsetDensity = Double(onsetTimes.count) / max(1, duration)
+
+        guard pitchCount >= 5 else {
+            return onsetDensity > 3 ? .percussion : .unknown
+        }
+
+        let avgFreq = collectedPitches.reduce(0, +) / Float(pitchCount)
+        // Voice fundamentals tend to sit above ~150 Hz; guitar lower strings below 150 Hz.
+        return avgFreq < 300 ? .guitar : .humming
     }
 
     // MARK: - Playback
 
     func play(memo: Memo) {
-        guard let player = try? AVAudioPlayer(contentsOf: memo.fileURL) else { return }
-        self.player = player
-        player.play()
-    }
-
-    // MARK: - Level metering
-
-    private func startLevelPolling() {
-        levelTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
-            Task { @MainActor [weak self] in
-                self?.updateLevels()
-            }
-        }
-    }
-
-    private func stopLevelPolling() {
-        levelTimer?.invalidate()
-        levelTimer = nil
-        currentLevels = Array(repeating: 0, count: 20)
-    }
-
-    private func updateLevels() {
-        recorder?.updateMeters()
-        currentLevels = (0..<20).map { _ in
-            let raw = recorder?.averagePower(forChannel: 0) ?? -60
-            let normalized = max(0, (raw + 60) / 60)
-            return Float.random(in: max(0.05, normalized - 0.1)...min(1, normalized + 0.1))
-        }
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
+        guard let p = try? AVAudioPlayer(contentsOf: memo.fileURL) else { return }
+        player = p
+        player?.play()
     }
 
     // MARK: - Storage
