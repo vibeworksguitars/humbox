@@ -42,6 +42,7 @@ targets:
         UILaunchScreen:
           UIColorName: ""
         NSMicrophoneUsageDescription: "Humbox needs microphone access to capture your musical ideas."
+        NSSpeechRecognitionUsageDescription: "Humbox transcribes lyrics and vocals from your recordings so you can search them as text."
         UIBackgroundModes:
           - audio
         UISupportedInterfaceOrientations:

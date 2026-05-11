@@ -52,6 +52,10 @@ final class AudioService: ObservableObject {
         lastAmplitude = 0
         recordingStartTime = Date()
 
+        // Request speech recognition permission early so it's ready by the time
+        // the recording finishes (non-blocking — we don't gate recording on it).
+        Task { await TranscriptionService.requestPermission() }
+
         do {
             try AVAudioSession.sharedInstance().setCategory(
                 .playAndRecord, mode: .measurement,
@@ -113,15 +117,21 @@ final class AudioService: ObservableObject {
         let destURL = recordingsDirectory.appendingPathComponent("\(UUID().uuidString).caf")
         try? FileManager.default.copyItem(at: audioFile.url, to: destURL)
 
-        let key  = KeyFinder.detect(from: collectedPitches)
-        let bpm  = estimateBPM()
+        let key = KeyFinder.detect(from: collectedPitches)
+        let bpm = estimateBPM()
 
-        // Run SoundAnalysis on the saved file off the main thread
-        let contentType = await Task.detached(priority: .userInitiated) {
+        // Classification and transcription run in parallel — both are file-based
+        // and independent, so there's no reason to wait for one before starting the other.
+        async let classifyTask: Memo.ContentType = Task.detached(priority: .userInitiated) {
             ContentClassifier.classify(audioFileURL: destURL)
         }.value
 
-        let title = TitleGenerator.generate(key: key, bpm: bpm, contentType: contentType)
+        async let transcribeTask: String? = Task.detached(priority: .userInitiated) {
+            await TranscriptionService.transcribe(audioFileURL: destURL)
+        }.value
+
+        let (contentType, transcript) = await (classifyTask, transcribeTask)
+        let title = TitleGenerator.generate(key: key, bpm: bpm, contentType: contentType, transcript: transcript)
 
         let memo = Memo(
             fileURL: destURL,
@@ -129,7 +139,8 @@ final class AudioService: ObservableObject {
             title: title,
             key: key,
             bpm: bpm,
-            contentType: contentType
+            contentType: contentType,
+            transcript: transcript
         )
         memos.insert(memo, at: 0)
     }

@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Humbox needs microphone access to capture your musical ideas.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Humbox transcribes lyrics and vocals from your recordings so you can search them as text.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
