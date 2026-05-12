@@ -55,7 +55,7 @@ struct DevelopSheet: View {
                     onDevelop(notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : notes)
                     dismiss()
                 } label: {
-                    Label("Mark as Developed", systemImage: "checkmark.circle.fill")
+                    Label("Mark as Developed", systemImage: "checkmark.circle")
                         .fontWeight(.medium)
                         .foregroundStyle(.black)
                         .frame(maxWidth: .infinity)

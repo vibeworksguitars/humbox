@@ -95,7 +95,7 @@ struct MemoDetailView: View {
                     Button {
                         showDevelopSheet = true
                     } label: {
-                        Label(memo.isDeveloped ? "Developed ✓" : "Develop", systemImage: memo.isDeveloped ? "checkmark.circle.fill" : "sparkles")
+                        Label(memo.isDeveloped ? "Developed" : "Develop", systemImage: memo.isDeveloped ? "checkmark.circle.fill" : "checkmark.circle")
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(memo.isDeveloped ? .secondary : .black)
                     }
