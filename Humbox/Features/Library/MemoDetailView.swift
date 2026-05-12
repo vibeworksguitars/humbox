@@ -63,6 +63,7 @@ struct MemoDetailView: View {
                     } label: {
                         Label("Develop", systemImage: "sparkles")
                             .frame(maxWidth: .infinity)
+                            .foregroundStyle(.black)
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.white)

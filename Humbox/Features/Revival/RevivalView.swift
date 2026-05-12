@@ -95,6 +95,7 @@ private struct RevivalCard: View {
                     Text("Develop")
                         .font(.subheadline)
                         .frame(maxWidth: .infinity)
+                        .foregroundStyle(.black)
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.white)
