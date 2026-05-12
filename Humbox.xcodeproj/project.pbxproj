@@ -15,6 +15,7 @@
 		34D169848098FADBA5CAEC9A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E1BF7C032B33743B4C46FA /* MainTabView.swift */; };
 		4707039329A60918A6DFB499 /* HumboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5083DAC7C79C74B0D9499F /* HumboxTests.swift */; };
 		480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* DevelopSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* DevelopSheet.swift */; };
 		483117A3EBCC4F02F11D3A61 /* KeyFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406F9747DDD1036C6CB6D068 /* KeyFinder.swift */; };
 		4AFC096A0A0B07608BFC8E7C /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */; };
 		64BA4DF1EEFF99378D4C3873 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		9B27C2ADBC489D9F75B04C52 /* ContentClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentClassifier.swift; sourceTree = "<group>"; };
 		9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSheet.swift; sourceTree = "<group>"; };
+		D4E5F6A7B8C9D0E1F2A3B4C5 /* DevelopSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopSheet.swift; sourceTree = "<group>"; };
 		C7CC579CAB51E3D3088D655A /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevivalView.swift; sourceTree = "<group>"; };
 		EA2A0C9150D5ECC2AA7389CA /* Humbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Humbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */,
+				D4E5F6A7B8C9D0E1F2A3B4C5 /* DevelopSheet.swift */,
 				1F692332E5F6DC87BD8E7884 /* LibraryView.swift */,
 				F0A726A30D145E7F1F810665 /* MemoDetailView.swift */,
 			);
@@ -319,6 +322,7 @@
 				675B9859825907A29BC83646 /* ContentClassifier.swift in Sources */,
 				DCDA9A465ABE448CD301BEEB /* ExportService.swift in Sources */,
 				480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* DevelopSheet.swift in Sources */,
 				EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */,
 				483117A3EBCC4F02F11D3A61 /* KeyFinder.swift in Sources */,
 				2D3036747719AE1392842F6B /* LibraryView.swift in Sources */,

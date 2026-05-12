@@ -195,6 +195,13 @@ final class AudioService: ObservableObject {
         return (40...240).contains(bpm) ? bpm : nil
     }
 
+    // MARK: - Memo management
+
+    func update(memo: Memo) {
+        guard let index = memos.firstIndex(where: { $0.id == memo.id }) else { return }
+        memos[index] = memo
+    }
+
     // MARK: - Playback
 
     func play(memo: Memo) {

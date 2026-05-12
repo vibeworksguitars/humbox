@@ -6,6 +6,7 @@ struct MemoDetailView: View {
     @State private var isPlaying = false
     @State private var playProgress: CGFloat = 0
     @State private var showExportSheet = false
+    @State private var showDevelopSheet = false
 
     var body: some View {
         ScrollView {
@@ -44,6 +45,39 @@ struct MemoDetailView: View {
                 // Transcript / lyrics
                 LyricsSection(transcript: memo.transcript)
 
+                // Development notes
+                if memo.isDeveloped {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(spacing: 6) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                                .font(.caption)
+                            Text("Developed")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                            if let date = memo.developedAt {
+                                Text("· \(date.formatted(.dateTime.month().day()))")
+                                    .font(.caption)
+                                    .foregroundStyle(.tertiary)
+                            }
+                        }
+                        if let notes = memo.developmentNotes {
+                            Text(notes)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(.secondarySystemBackground))
+                    .overlay(alignment: .leading) {
+                        Rectangle()
+                            .fill(Color.green)
+                            .frame(width: 2)
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+
                 // Project
                 HStack {
                     Text("Project:")
@@ -59,14 +93,15 @@ struct MemoDetailView: View {
                 // Actions
                 HStack(spacing: 12) {
                     Button {
-                        // TODO: develop flow
+                        showDevelopSheet = true
                     } label: {
-                        Label("Develop", systemImage: "sparkles")
+                        Label(memo.isDeveloped ? "Developed ✓" : "Develop", systemImage: memo.isDeveloped ? "checkmark.circle.fill" : "sparkles")
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(memo.isDeveloped ? .secondary : .black)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(.white)
+                    .tint(memo.isDeveloped ? Color(.secondarySystemBackground) : .white)
+                    .disabled(memo.isDeveloped)
 
                     Button {
                         showExportSheet = true
@@ -83,6 +118,15 @@ struct MemoDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showExportSheet) {
             ExportSheet(memo: memo)
+        }
+        .sheet(isPresented: $showDevelopSheet) {
+            DevelopSheet(memo: memo) { notes in
+                var updated = memo
+                updated.isDeveloped = true
+                updated.developedAt = Date()
+                updated.developmentNotes = notes
+                audio.update(memo: updated)
+            }
         }
     }
 }

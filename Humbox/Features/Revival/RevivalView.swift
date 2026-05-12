@@ -57,6 +57,7 @@ private struct RevivalCard: View {
     let reason: String
     @EnvironmentObject private var audio: AudioService
     @State private var selectedMemo: Memo? = nil
+    @State private var developMemo: Memo? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -90,7 +91,7 @@ private struct RevivalCard: View {
                 .tint(.white)
 
                 Button {
-                    selectedMemo = memo
+                    developMemo = memo
                 } label: {
                     Text("Develop")
                         .font(.subheadline)
@@ -108,6 +109,15 @@ private struct RevivalCard: View {
         .padding(.horizontal)
         .navigationDestination(item: $selectedMemo) { memo in
             MemoDetailView(memo: memo)
+        }
+        .sheet(item: $developMemo) { memo in
+            DevelopSheet(memo: memo) { notes in
+                var updated = memo
+                updated.isDeveloped = true
+                updated.developedAt = Date()
+                updated.developmentNotes = notes
+                audio.update(memo: updated)
+            }
         }
     }
 }

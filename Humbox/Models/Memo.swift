@@ -19,6 +19,8 @@ struct Memo: Identifiable, Codable, Hashable {
     var playCount: Int = 0
     var lastPlayedAt: Date?
     var isDeveloped: Bool = false
+    var developmentNotes: String?
+    var developedAt: Date?
 
     enum ContentType: String, Codable, CaseIterable {
         case humming
