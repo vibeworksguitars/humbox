@@ -10,9 +10,11 @@
 		08C46563F5E092C1001304EC /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1738CB2B4671B1E6DD45C2DD /* Project.swift */; };
 		1644E6175B052706DE59E854 /* TitleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE3266F62E32B891CFE3322 /* TitleGenerator.swift */; };
 		1AB4EE0E16BB3C8844C922CA /* MemoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A726A30D145E7F1F810665 /* MemoDetailView.swift */; };
+		24648A5269514F8756577C05 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8C8F0BFBFCD51F4BDEC42F /* PaywallView.swift */; };
 		2D3036747719AE1392842F6B /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F692332E5F6DC87BD8E7884 /* LibraryView.swift */; };
 		34D169848098FADBA5CAEC9A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E1BF7C032B33743B4C46FA /* MainTabView.swift */; };
 		4707039329A60918A6DFB499 /* HumboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5083DAC7C79C74B0D9499F /* HumboxTests.swift */; };
+		480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */; };
 		483117A3EBCC4F02F11D3A61 /* KeyFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406F9747DDD1036C6CB6D068 /* KeyFinder.swift */; };
 		4AFC096A0A0B07608BFC8E7C /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */; };
 		64BA4DF1EEFF99378D4C3873 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */; };
@@ -20,7 +22,9 @@
 		74CB468D583BCBF0888DDA37 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC579CAB51E3D3088D655A /* Memo.swift */; };
 		8E770727FF7F392A8B81A485 /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F6A27B687F3271B9124A6 /* TranscriptionService.swift */; };
 		B656FE6EFDD5367FCC577520 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B73F63EE38CE103857927F60 /* AudioKit */; };
+		B90883DC2737F4F421D7103D /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1C698EE82CEFD6D42FFEA9 /* StoreService.swift */; };
 		CB749D4F23A4AFE0C6686090 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0408E42E6EC3EC00EC9D4BEA /* SoundpipeAudioKit */; };
+		DCDA9A465ABE448CD301BEEB /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F96B5B16587162F3AAC3134 /* ExportService.swift */; };
 		E4F737D0DFC68A24C2D2287A /* RevivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */; };
 		E7CAD0212C0A5A0103DC7A04 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7702B9253D7A853B3F67A525 /* CaptureView.swift */; };
 		EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA5AD202C570C08155076E /* HumboxApp.swift */; };
@@ -38,12 +42,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D1C698EE82CEFD6D42FFEA9 /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
 		1738CB2B4671B1E6DD45C2DD /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		1F692332E5F6DC87BD8E7884 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		21DA5AD202C570C08155076E /* HumboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumboxApp.swift; sourceTree = "<group>"; };
 		3318326255D597D16B9C906F /* HumboxTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HumboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A8C8F0BFBFCD51F4BDEC42F /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		406F9747DDD1036C6CB6D068 /* KeyFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyFinder.swift; sourceTree = "<group>"; };
 		51E1BF7C032B33743B4C46FA /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		6F96B5B16587162F3AAC3134 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		7702B9253D7A853B3F67A525 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		7A81548805E6FF0194C894EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7AE3266F62E32B891CFE3322 /* TitleGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleGenerator.swift; sourceTree = "<group>"; };
@@ -53,6 +60,7 @@
 		922DBB2FCA4F22E2F5AFE0DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9B27C2ADBC489D9F75B04C52 /* ContentClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentClassifier.swift; sourceTree = "<group>"; };
 		9EEBDDED2B302D4B54B5F77F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSheet.swift; sourceTree = "<group>"; };
 		C7CC579CAB51E3D3088D655A /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevivalView.swift; sourceTree = "<group>"; };
 		EA2A0C9150D5ECC2AA7389CA /* Humbox.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Humbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +85,9 @@
 			children = (
 				89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */,
 				9B27C2ADBC489D9F75B04C52 /* ContentClassifier.swift */,
+				6F96B5B16587162F3AAC3134 /* ExportService.swift */,
 				406F9747DDD1036C6CB6D068 /* KeyFinder.swift */,
+				0D1C698EE82CEFD6D42FFEA9 /* StoreService.swift */,
 				7AE3266F62E32B891CFE3322 /* TitleGenerator.swift */,
 				918F6A27B687F3271B9124A6 /* TranscriptionService.swift */,
 			);
@@ -124,9 +134,18 @@
 			path = Humbox;
 			sourceTree = "<group>";
 		};
+		51F1063E3FF3ABF13C9C9012 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				3A8C8F0BFBFCD51F4BDEC42F /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
 		740E6A212A7E0C4905025782 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */,
 				1F692332E5F6DC87BD8E7884 /* LibraryView.swift */,
 				F0A726A30D145E7F1F810665 /* MemoDetailView.swift */,
 			);
@@ -138,6 +157,7 @@
 			children = (
 				934D49B550D3A8FB5D3DBDF0 /* Capture */,
 				740E6A212A7E0C4905025782 /* Library */,
+				51F1063E3FF3ABF13C9C9012 /* Paywall */,
 				ED4C190B1ADAF15ED2D3BCD6 /* Revival */,
 			);
 			path = Features;
@@ -297,14 +317,18 @@
 				4AFC096A0A0B07608BFC8E7C /* AudioService.swift in Sources */,
 				E7CAD0212C0A5A0103DC7A04 /* CaptureView.swift in Sources */,
 				675B9859825907A29BC83646 /* ContentClassifier.swift in Sources */,
+				DCDA9A465ABE448CD301BEEB /* ExportService.swift in Sources */,
+				480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */,
 				EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */,
 				483117A3EBCC4F02F11D3A61 /* KeyFinder.swift in Sources */,
 				2D3036747719AE1392842F6B /* LibraryView.swift in Sources */,
 				34D169848098FADBA5CAEC9A /* MainTabView.swift in Sources */,
 				74CB468D583BCBF0888DDA37 /* Memo.swift in Sources */,
 				1AB4EE0E16BB3C8844C922CA /* MemoDetailView.swift in Sources */,
+				24648A5269514F8756577C05 /* PaywallView.swift in Sources */,
 				08C46563F5E092C1001304EC /* Project.swift in Sources */,
 				E4F737D0DFC68A24C2D2287A /* RevivalView.swift in Sources */,
+				B90883DC2737F4F421D7103D /* StoreService.swift in Sources */,
 				1644E6175B052706DE59E854 /* TitleGenerator.swift in Sources */,
 				8E770727FF7F392A8B81A485 /* TranscriptionService.swift in Sources */,
 			);

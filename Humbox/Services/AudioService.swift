@@ -72,10 +72,9 @@ final class AudioService: ObservableObject {
             return
         }
 
-        // Route mic through a silent fader so the engine has a valid output
-        // without feeding back through the speakers.
-        let silence = Fader(mic, gain: 0)
-        engine.output = silence
+        // Mixer gives the engine a valid output node. Measurement mode on the
+        // audio session prevents the mic signal from being routed to the speaker.
+        engine.output = Mixer(mic)
 
         pitchTap = PitchTap(mic) { [weak self] pitches, amplitudes in
             Task { @MainActor [weak self] in
