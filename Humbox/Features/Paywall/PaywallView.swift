@@ -31,8 +31,7 @@ struct PaywallView: View {
                     VStack(alignment: .leading, spacing: 14) {
                         FeatureRow(icon: "infinity",          text: "Unlimited recordings")
                         FeatureRow(icon: "tuningfork",        text: "Key & BPM detection")
-                        FeatureRow(icon: "clock.arrow.circlepath", text: "30-second capture buffer")
-                        FeatureRow(icon: "arrow.clockwise",   text: "Weekly revival feed")
+FeatureRow(icon: "arrow.clockwise",   text: "Weekly revival feed")
                         FeatureRow(icon: "pianokeys",         text: "Melody-to-MIDI export")
                     }
                     .padding(.horizontal)

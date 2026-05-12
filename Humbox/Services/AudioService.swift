@@ -7,7 +7,6 @@ import SwiftUI
 final class AudioService: ObservableObject {
     @Published var recordingState: RecordingState = .idle
     @Published var memos: [Memo] = []
-    @Published var bufferEnabled: Bool = true
     @Published var currentLevels: [Float] = Array(repeating: 0.05, count: 20)
 
     // Engine and nodes are created once and reused across recording sessions.
@@ -146,7 +145,8 @@ final class AudioService: ObservableObject {
             await TranscriptionService.transcribe(audioFileURL: destURL)
         }.value
 
-        let (contentType, transcript) = await (classifyTask, transcribeTask)
+        var (contentType, transcript) = await (classifyTask, transcribeTask)
+        if transcript != nil { contentType = .lyrics }
         let title = TitleGenerator.generate(key: key, bpm: bpm, contentType: contentType, transcript: transcript)
 
         let memo = Memo(

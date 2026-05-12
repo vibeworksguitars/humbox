@@ -26,7 +26,6 @@ struct TranscriptionService {
         guard let recognizer = SFSpeechRecognizer(), recognizer.isAvailable else { return nil }
 
         let request = SFSpeechURLRecognitionRequest(url: audioFileURL)
-        request.requiresOnDeviceRecognition = true  // no network call, iOS 17+
         request.addsPunctuation = true
         request.taskHint = .dictation
 

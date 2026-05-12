@@ -30,7 +30,7 @@ struct CaptureView: View {
                                 .font(.caption)
                                 .foregroundStyle(.tertiary)
                         } else {
-                            Text("Tap to capture · long-press for buffer")
+                            Text("Tap to start · tap again to stop")
                                 .font(.caption)
                                 .foregroundStyle(.tertiary)
                         }
@@ -53,12 +53,6 @@ struct CaptureView: View {
                 }
 
                 Spacer()
-
-                // Buffer toggle (only shown to free users approaching cap or to pro users)
-                if !atCap || store.isPro {
-                    BufferToggle(enabled: $audio.bufferEnabled)
-                        .padding(.bottom, 8)
-                }
 
                 // Footer: last captured or free-tier counter
                 Group {
@@ -159,34 +153,6 @@ private struct RecordButton: View {
         .buttonStyle(.plain)
         .animation(.easeInOut(duration: 0.2), value: isRecording)
         .animation(.easeInOut(duration: 0.2), value: locked)
-    }
-}
-
-// MARK: - Buffer Toggle
-
-private struct BufferToggle: View {
-    @Binding var enabled: Bool
-
-    var body: some View {
-        Button {
-            enabled.toggle()
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "clock.arrow.circlepath")
-                    .font(.subheadline)
-                Text("30s buffer \(enabled ? "on" : "off")")
-                    .font(.subheadline)
-                Toggle("", isOn: $enabled)
-                    .labelsHidden()
-                    .tint(.blue)
-                    .scaleEffect(0.8)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(.regularMaterial, in: Capsule())
-            .foregroundStyle(.secondary)
-        }
-        .buttonStyle(.plain)
     }
 }
 
