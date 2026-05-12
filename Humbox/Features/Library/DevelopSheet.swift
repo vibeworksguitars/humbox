@@ -16,7 +16,7 @@ struct DevelopSheet: View {
                     Text("Mark as developed")
                         .font(.title3)
                         .fontWeight(.semibold)
-                    Text(""\(memo.title)"")
+                    Text("\"\(memo.title)\"")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .lineLimit(2)
@@ -35,7 +35,7 @@ struct DevelopSheet: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color(.secondarySystemBackground))
                         if notes.isEmpty {
-                            Text("e.g. "Turned into the chorus of Starless Night"")
+                            Text("e.g. \"Turned into the chorus of Starless Night\"")
                                 .font(.subheadline)
                                 .foregroundStyle(.quaternary)
                                 .padding(12)
