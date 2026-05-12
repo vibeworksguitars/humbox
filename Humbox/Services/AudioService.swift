@@ -198,7 +198,7 @@ final class AudioService: ObservableObject {
     // MARK: - Playback
 
     func play(memo: Memo) {
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
         try? AVAudioSession.sharedInstance().setActive(true)
         guard let p = try? AVAudioPlayer(contentsOf: memo.fileURL) else { return }
         player = p
