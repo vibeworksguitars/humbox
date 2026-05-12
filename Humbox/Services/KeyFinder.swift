@@ -1,8 +1,8 @@
 import Foundation
 
 // Krumhansl-Schmuckler key-finding algorithm.
-// Builds a pitch-class histogram from detected frequencies, then finds the
-// major/minor key whose profile best correlates (Pearson r) with the histogram.
+// Builds an amplitude-weighted pitch-class histogram from detected frequencies,
+// then finds the major/minor key whose profile best correlates (Pearson r).
 enum KeyFinder {
 
     // Krumhansl-Kessler tonal hierarchy profiles (C = index 0)
@@ -12,16 +12,17 @@ enum KeyFinder {
     private static let noteNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
 
     // Returns a key string like "Dm", "A", "F#m", or nil if there's not enough data.
-    static func detect(from frequencies: [Float]) -> String? {
-        guard frequencies.count >= 10 else { return nil }
+    static func detect(from samples: [(pitch: Float, amplitude: Float)]) -> String? {
+        guard samples.count >= 20 else { return nil }
 
-        // Build normalized pitch-class histogram
+        // Build amplitude-weighted pitch-class histogram.
+        // Louder, clearer pitches carry more weight than faint detections.
         var histogram = [Double](repeating: 0, count: 12)
-        for freq in frequencies {
-            guard freq > 60, freq < 2000 else { continue }
-            let midi = 69.0 + 12.0 * log2(Double(freq) / 440.0)
-            let raw = Int(midi.rounded()) % 12
-            histogram[(raw + 12) % 12] += 1
+        for s in samples {
+            guard s.pitch > 60, s.pitch < 2000 else { continue }
+            let midi = 69.0 + 12.0 * log2(Double(s.pitch) / 440.0)
+            let pc = ((Int(midi.rounded()) % 12) + 12) % 12
+            histogram[pc] += Double(s.amplitude)
         }
         let total = histogram.reduce(0, +)
         guard total > 0 else { return nil }

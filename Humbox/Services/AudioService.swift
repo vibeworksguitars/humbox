@@ -20,7 +20,7 @@ final class AudioService: ObservableObject {
     private var player: AVAudioPlayer?
     private var engineSetUp = false
 
-    private var collectedPitches: [Float] = []
+    private var collectedPitches: [(pitch: Float, amplitude: Float)] = []
     private var onsetTimes: [TimeInterval] = []
     private var lastAmplitude: Float = 0
     private var recordingStartTime: Date?
@@ -167,8 +167,8 @@ final class AudioService: ObservableObject {
         let elapsed = Date().timeIntervalSince(recordingStartTime ?? Date())
 
         for (pitch, amp) in zip(pitches, amplitudes) {
-            if amp > 0.02, pitch > 80, pitch < 1400 {
-                collectedPitches.append(pitch)
+            if amp > 0.05, pitch > 80, pitch < 1400 {
+                collectedPitches.append((pitch: pitch, amplitude: amp))
             }
             if amp - lastAmplitude > 0.12 {
                 onsetTimes.append(elapsed)
