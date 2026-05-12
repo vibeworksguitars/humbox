@@ -7,20 +7,11 @@ struct SplashView: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            VStack(spacing: 16) {
-                // Wordmark — "h" and "b" in crimson, rest in gray
-                HStack(spacing: 0) {
-                    Text("h")
-                        .foregroundStyle(Brand.crimson)
-                    Text("um")
-                        .foregroundStyle(Brand.gray)
-                    Text("b")
-                        .foregroundStyle(Brand.crimson)
-                    Text("ox")
-                        .foregroundStyle(Brand.gray)
-                }
-                .font(.system(size: 56, weight: .bold, design: .rounded))
-                .kerning(-1)
+            VStack(spacing: 20) {
+                Image("HumboxLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 240)
 
                 Text("capture your ideas")
                     .font(.subheadline)

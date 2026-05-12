@@ -74,8 +74,15 @@ struct CaptureView: View {
                 }
                 .padding(.bottom, 12)
             }
-            .navigationTitle("Humbox")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Image("HumboxLogo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 22)
+                }
+            }
             .alert("Microphone Access", isPresented: $showPermissionAlert) {
                 Button("Open Settings") {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
