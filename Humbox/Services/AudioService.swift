@@ -6,7 +6,7 @@ import SwiftUI
 @MainActor
 final class AudioService: ObservableObject {
     @Published var recordingState: RecordingState = .idle
-    @Published var memos: [Memo] = Memo.samples
+    @Published var memos: [Memo] = []
     @Published var bufferEnabled: Bool = true
     @Published var currentLevels: [Float] = Array(repeating: 0.05, count: 20)
 
