@@ -87,6 +87,7 @@ private struct RevivalCard: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
+                .tint(.white)
 
                 Button {
                     selectedMemo = memo
@@ -96,6 +97,7 @@ private struct RevivalCard: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(.white)
             }
         }
         .padding(14)

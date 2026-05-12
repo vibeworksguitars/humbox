@@ -65,6 +65,7 @@ struct MemoDetailView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .tint(.white)
 
                     Button {
                         showExportSheet = true
@@ -73,6 +74,7 @@ struct MemoDetailView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
+                    .tint(.white)
                 }
             }
             .padding()

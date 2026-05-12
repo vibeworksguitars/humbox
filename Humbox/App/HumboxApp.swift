@@ -11,6 +11,7 @@ struct HumboxApp: App {
                 .environmentObject(audioService)
                 .environmentObject(storeService)
                 .task { await storeService.load() }
+                .preferredColorScheme(.dark)
         }
     }
 }
