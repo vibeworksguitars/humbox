@@ -15,6 +15,7 @@ final class AudioService: ObservableObject {
     // underlying AVAudioNode tap isn't released before the new one is installed.
     private let engine = AudioEngine()
     private var mic: AudioEngine.InputNode?
+    private var mixer: Mixer?         // sits between mic and engine output
     private var pitchTap: PitchTap?
     private var recorder: NodeRecorder?
     private var player: AVAudioPlayer?
@@ -57,9 +58,14 @@ final class AudioService: ObservableObject {
         }
 
         mic = input
-        engine.output = Mixer(input)
 
-        // PitchTap is created once and lives for the app session.
+        // PitchTap taps the mic node.
+        // NodeRecorder taps the mixer node.
+        // They must be on different nodes — AVAudioEngine allows only one tap per node.
+        let mix = Mixer(input)
+        mixer = mix
+        engine.output = mix
+
         pitchTap = PitchTap(input) { [weak self] pitches, amplitudes in
             Task { @MainActor [weak self] in
                 self?.processPitchData(pitches: pitches, amplitudes: amplitudes)
@@ -94,9 +100,9 @@ final class AudioService: ObservableObject {
 
         do {
             try setupEngineIfNeeded()
-            guard let mic else { return }
+            guard let mixer else { return }
 
-            recorder = try NodeRecorder(node: mic)
+            recorder = try NodeRecorder(node: mixer)
             pitchTap?.start()
             try engine.start()
             try recorder?.record()
