@@ -80,7 +80,7 @@ struct CaptureView: View {
                     Image("HumboxLogo")
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 22)
+                        .frame(height: 44)
                 }
             }
             .alert("Microphone Access", isPresented: $showPermissionAlert) {
