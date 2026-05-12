@@ -10,12 +10,16 @@ final class AudioService: ObservableObject {
     @Published var bufferEnabled: Bool = true
     @Published var currentLevels: [Float] = Array(repeating: 0.05, count: 20)
 
+    // Engine and nodes are created once and reused across recording sessions.
+    // Re-creating PitchTap each session causes "nullptr == Tap()" because the
+    // underlying AVAudioNode tap isn't released before the new one is installed.
     private let engine = AudioEngine()
+    private var mic: AudioEngine.InputNode?
     private var pitchTap: PitchTap?
     private var recorder: NodeRecorder?
     private var player: AVAudioPlayer?
+    private var engineSetUp = false
 
-    // Data collected during each recording session
     private var collectedPitches: [Float] = []
     private var onsetTimes: [TimeInterval] = []
     private var lastAmplitude: Float = 0
@@ -42,6 +46,29 @@ final class AudioService: ObservableObject {
         }
     }
 
+    // MARK: - Engine setup (once)
+
+    private func setupEngineIfNeeded() throws {
+        guard !engineSetUp else { return }
+
+        guard let input = engine.input else {
+            print("Microphone input unavailable")
+            return
+        }
+
+        mic = input
+        engine.output = Mixer(input)
+
+        // PitchTap is created once and lives for the app session.
+        pitchTap = PitchTap(input) { [weak self] pitches, amplitudes in
+            Task { @MainActor [weak self] in
+                self?.processPitchData(pitches: pitches, amplitudes: amplitudes)
+            }
+        }
+
+        engineSetUp = true
+    }
+
     // MARK: - Recording
 
     func startRecording() async {
@@ -52,8 +79,6 @@ final class AudioService: ObservableObject {
         lastAmplitude = 0
         recordingStartTime = Date()
 
-        // Request speech recognition permission early so it's ready by the time
-        // the recording finishes (non-blocking — we don't gate recording on it).
         Task { await TranscriptionService.requestPermission() }
 
         do {
@@ -67,22 +92,10 @@ final class AudioService: ObservableObject {
             return
         }
 
-        guard let mic = engine.input else {
-            print("Microphone input unavailable")
-            return
-        }
-
-        // Mixer gives the engine a valid output node. Measurement mode on the
-        // audio session prevents the mic signal from being routed to the speaker.
-        engine.output = Mixer(mic)
-
-        pitchTap = PitchTap(mic) { [weak self] pitches, amplitudes in
-            Task { @MainActor [weak self] in
-                self?.processPitchData(pitches: pitches, amplitudes: amplitudes)
-            }
-        }
-
         do {
+            try setupEngineIfNeeded()
+            guard let mic else { return }
+
             recorder = try NodeRecorder(node: mic)
             pitchTap?.start()
             try engine.start()
@@ -90,6 +103,7 @@ final class AudioService: ObservableObject {
             recordingState = .recording(startedAt: Date())
         } catch {
             print("Recording start error: \(error)")
+            pitchTap?.stop()
             engine.stop()
         }
     }
@@ -112,15 +126,12 @@ final class AudioService: ObservableObject {
         guard let audioFile = recorder?.audioFile else { return }
         let duration = recordingStartTime.map { Date().timeIntervalSince($0) } ?? 0
 
-        // Copy recorded CAF to our documents directory
         let destURL = recordingsDirectory.appendingPathComponent("\(UUID().uuidString).caf")
         try? FileManager.default.copyItem(at: audioFile.url, to: destURL)
 
         let key = KeyFinder.detect(from: collectedPitches)
         let bpm = estimateBPM()
 
-        // Classification and transcription run in parallel — both are file-based
-        // and independent, so there's no reason to wait for one before starting the other.
         async let classifyTask: Memo.ContentType = Task.detached(priority: .userInitiated) {
             ContentClassifier.classify(audioFileURL: destURL)
         }.value
@@ -144,23 +155,21 @@ final class AudioService: ObservableObject {
         memos.insert(memo, at: 0)
     }
 
-    // Called from PitchTap's background callback — dispatched to MainActor above.
+    // MARK: - Pitch processing
+
     private func processPitchData(pitches: [AUValue], amplitudes: [AUValue]) {
         let elapsed = Date().timeIntervalSince(recordingStartTime ?? Date())
 
         for (pitch, amp) in zip(pitches, amplitudes) {
-            // Pitched content in guitar/voice range
             if amp > 0.02, pitch > 80, pitch < 1400 {
                 collectedPitches.append(pitch)
             }
-            // Onset: sharp amplitude rise → likely a note attack or beat
             if amp - lastAmplitude > 0.12 {
                 onsetTimes.append(elapsed)
             }
             lastAmplitude = amp
         }
 
-        // Update level bars for the UI waveform visualisation
         let amp = amplitudes.first ?? 0
         let norm = min(1.0, max(0.0, amp * 3.0))
         currentLevels = (0..<20).map { _ in
@@ -168,7 +177,8 @@ final class AudioService: ObservableObject {
         }
     }
 
-    // Estimate BPM from inter-onset intervals.
+    // MARK: - BPM estimation
+
     private func estimateBPM() -> Int? {
         guard onsetTimes.count >= 4 else { return nil }
         let intervals = zip(onsetTimes, onsetTimes.dropFirst()).map { $1 - $0 }
