@@ -24,7 +24,7 @@ struct SplashView: View {
                 Image("HumboxLogo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 240)
+                    .frame(width: 320)
 
                 Text(tagline)
                     .font(.subheadline)
