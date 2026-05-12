@@ -193,7 +193,7 @@ private struct LyricsSection: View {
         .background(Color(.secondarySystemBackground))
         .overlay(alignment: .leading) {
             Rectangle()
-                .fill(Color.blue)
+                .fill(Brand.crimson)
                 .frame(width: 2)
         }
         .clipShape(RoundedRectangle(cornerRadius: 8))

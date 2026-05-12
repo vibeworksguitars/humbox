@@ -29,6 +29,8 @@
 		E4F737D0DFC68A24C2D2287A /* RevivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26780E3DDD00B7FCEB972B8 /* RevivalView.swift */; };
 		E7CAD0212C0A5A0103DC7A04 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7702B9253D7A853B3F67A525 /* CaptureView.swift */; };
 		EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA5AD202C570C08155076E /* HumboxApp.swift */; };
+		B1C2D3E4F5A60718293A4B5D /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3E4F5A6B70819304B5C6D /* Brand.swift */; };
+		C3D4E5F6A7B80819304B5C6E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C90819304B5C6F /* SplashView.swift */; };
 		FA152A07352F8ACCF17A742B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A81548805E6FF0194C894EA /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +53,8 @@
 		3A8C8F0BFBFCD51F4BDEC42F /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		406F9747DDD1036C6CB6D068 /* KeyFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyFinder.swift; sourceTree = "<group>"; };
 		51E1BF7C032B33743B4C46FA /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		C2D3E4F5A6B70819304B5C6D /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		D4E5F6A7B8C90819304B5C6F /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		6F96B5B16587162F3AAC3134 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		7702B9253D7A853B3F67A525 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		7A81548805E6FF0194C894EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 			children = (
 				21DA5AD202C570C08155076E /* HumboxApp.swift */,
 				51E1BF7C032B33743B4C46FA /* MainTabView.swift */,
+				C2D3E4F5A6B70819304B5C6D /* Brand.swift */,
+				D4E5F6A7B8C90819304B5C6F /* SplashView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -324,6 +330,8 @@
 				480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */,
 				A1B2C3D4E5F60718293A4B5C /* DevelopSheet.swift in Sources */,
 				EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */,
+				B1C2D3E4F5A60718293A4B5D /* Brand.swift in Sources */,
+				C3D4E5F6A7B80819304B5C6E /* SplashView.swift in Sources */,
 				483117A3EBCC4F02F11D3A61 /* KeyFinder.swift in Sources */,
 				2D3036747719AE1392842F6B /* LibraryView.swift in Sources */,
 				34D169848098FADBA5CAEC9A /* MainTabView.swift in Sources */,

@@ -64,10 +64,10 @@ private struct RevivalCard: View {
             // Reason pill
             Text(reason)
                 .font(.caption)
-                .foregroundStyle(Color.blue)
+                .foregroundStyle(Brand.crimson)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 3)
-                .background(Color.blue.opacity(0.1))
+                .background(Brand.crimson.opacity(0.12))
                 .clipShape(RoundedRectangle(cornerRadius: 6))
 
             Text(memo.title)

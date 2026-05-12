@@ -120,15 +120,15 @@ private struct RecordButton: View {
                 if isRecording {
                     ForEach(0..<3, id: \.self) { i in
                         Circle()
-                            .stroke(Color.red.opacity(0.15 - Double(i) * 0.04), lineWidth: 2)
+                            .stroke(Brand.crimson.opacity(0.15 - Double(i) * 0.04), lineWidth: 2)
                             .frame(width: 140 + CGFloat(i + 1) * 28)
                     }
                 }
 
                 Circle()
-                    .fill(locked ? Color.secondary.opacity(0.25) : (isRecording ? Color.red.opacity(0.85) : Color.red))
+                    .fill(locked ? Color.secondary.opacity(0.25) : (isRecording ? Brand.crimson.opacity(0.85) : Brand.crimson))
                     .frame(width: 140, height: 140)
-                    .shadow(color: locked ? .clear : .red.opacity(0.3), radius: isRecording ? 20 : 8)
+                    .shadow(color: locked ? .clear : Brand.crimson.opacity(0.4), radius: isRecording ? 20 : 8)
 
                 if locked {
                     Image(systemName: "lock.fill")
