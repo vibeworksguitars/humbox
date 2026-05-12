@@ -115,16 +115,17 @@ struct ExportSheet: View {
                     HStack {
                         if isExporting {
                             ProgressView()
-                                .tint(.white)
+                                .tint(.black)
                                 .padding(.trailing, 4)
                         }
                         Text(isExporting ? "Preparing…" : "Share →")
                             .fontWeight(.medium)
+                            .foregroundStyle(.black)
                     }
                     .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.primary)
+                .tint(.white)
                 .disabled(isExporting)
                 .padding()
             }
