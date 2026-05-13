@@ -45,11 +45,7 @@ final class AudioService: ObservableObject {
     // MARK: - Permissions
 
     func requestMicrophonePermission() async -> Bool {
-        await withCheckedContinuation { continuation in
-            AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                continuation.resume(returning: granted)
-            }
-        }
+        await AVAudioApplication.requestRecordPermission()
     }
 
     // MARK: - Engine setup (once)
@@ -95,7 +91,7 @@ final class AudioService: ObservableObject {
         do {
             try AVAudioSession.sharedInstance().setCategory(
                 .playAndRecord, mode: .measurement,
-                options: [.defaultToSpeaker, .allowBluetooth]
+                options: [.defaultToSpeaker, .allowBluetoothHFP]
             )
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
