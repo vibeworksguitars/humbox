@@ -6,7 +6,9 @@ import SwiftUI
 @MainActor
 final class AudioService: ObservableObject {
     @Published var recordingState: RecordingState = .idle
-    @Published var memos: [Memo] = []
+    @Published var memos: [Memo] = [] {
+        didSet { saveMemos() }
+    }
     @Published var currentLevels: [Float] = Array(repeating: 0.05, count: 20)
 
     // Engine and nodes are created once and reused across recording sessions.
@@ -34,6 +36,10 @@ final class AudioService: ObservableObject {
     var isRecording: Bool {
         if case .recording = recordingState { return true }
         return false
+    }
+
+    init() {
+        loadMemos()
     }
 
     // MARK: - Permissions
@@ -210,6 +216,30 @@ final class AudioService: ObservableObject {
         guard let p = try? AVAudioPlayer(contentsOf: memo.fileURL) else { return }
         player = p
         player?.play()
+    }
+
+    // MARK: - Persistence
+
+    private var memosFileURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("memos.json")
+    }
+
+    private func saveMemos() {
+        do {
+            let data = try JSONEncoder().encode(memos)
+            try data.write(to: memosFileURL, options: .atomic)
+        } catch {
+            print("Failed to save memos: \(error)")
+        }
+    }
+
+    private func loadMemos() {
+        guard let data = try? Data(contentsOf: memosFileURL),
+              let saved = try? JSONDecoder().decode([Memo].self, from: data)
+        else { return }
+        // Filter out any memos whose audio file no longer exists on disk
+        memos = saved.filter { FileManager.default.fileExists(atPath: $0.fileURL.path) }
     }
 
     // MARK: - Storage
