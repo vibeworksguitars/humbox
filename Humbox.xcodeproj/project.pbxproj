@@ -17,6 +17,7 @@
 		480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2534BBFE11A5A4F76BEF8C1 /* ExportSheet.swift */; };
 		A1B2C3D4E5F60718293A4B5C /* DevelopSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* DevelopSheet.swift */; };
 		E1F2A3B4C5D6E7F8091A2B3C /* OverdubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A3B4C5D6E7F8091A2B3C4D /* OverdubService.swift */; };
+		B5C6D7E8F9001B2C3D4E5F60 /* ClickTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D7E8F9001B2C3D4E5F6071 /* ClickTrackService.swift */; };
 		F3A4B5C6D7E8F9001B2C3D4E /* OverdubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B5C6D7E8F9001B2C3D4E5F /* OverdubView.swift */; };
 		483117A3EBCC4F02F11D3A61 /* KeyFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406F9747DDD1036C6CB6D068 /* KeyFinder.swift */; };
 		4AFC096A0A0B07608BFC8E7C /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B8E605EF7AFB2E9AB46E49 /* AudioService.swift */; };
@@ -59,6 +60,7 @@
 		D4E5F6A7B8C90819304B5C6F /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		6F96B5B16587162F3AAC3134 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		F2A3B4C5D6E7F8091A2B3C4D /* OverdubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverdubService.swift; sourceTree = "<group>"; };
+		C6D7E8F9001B2C3D4E5F6071 /* ClickTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickTrackService.swift; sourceTree = "<group>"; };
 		A4B5C6D7E8F9001B2C3D4E5F /* OverdubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverdubView.swift; sourceTree = "<group>"; };
 		7702B9253D7A853B3F67A525 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		7A81548805E6FF0194C894EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				9B27C2ADBC489D9F75B04C52 /* ContentClassifier.swift */,
 				6F96B5B16587162F3AAC3134 /* ExportService.swift */,
 				F2A3B4C5D6E7F8091A2B3C4D /* OverdubService.swift */,
+				C6D7E8F9001B2C3D4E5F6071 /* ClickTrackService.swift */,
 				406F9747DDD1036C6CB6D068 /* KeyFinder.swift */,
 				0D1C698EE82CEFD6D42FFEA9 /* StoreService.swift */,
 				7AE3266F62E32B891CFE3322 /* TitleGenerator.swift */,
@@ -337,6 +340,7 @@
 				480E6D7A6AD29E6660F31CED /* ExportSheet.swift in Sources */,
 				A1B2C3D4E5F60718293A4B5C /* DevelopSheet.swift in Sources */,
 				E1F2A3B4C5D6E7F8091A2B3C /* OverdubService.swift in Sources */,
+				B5C6D7E8F9001B2C3D4E5F60 /* ClickTrackService.swift in Sources */,
 				F3A4B5C6D7E8F9001B2C3D4E /* OverdubView.swift in Sources */,
 				EFBF5F83C2BD1C8DC3E3E7FB /* HumboxApp.swift in Sources */,
 				B1C2D3E4F5A60718293A4B5D /* Brand.swift in Sources */,

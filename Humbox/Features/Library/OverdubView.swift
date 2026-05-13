@@ -8,11 +8,13 @@ struct OverdubView: View {
     @EnvironmentObject private var audio: AudioService
     @Environment(\.dismiss) private var dismiss
     @StateObject private var overdub = OverdubService()
+    @StateObject private var click = ClickTrackService()
 
     @State private var phase: Phase = .countdown(3)
     @State private var errorMessage: String?
     @State private var levels: [Float] = Array(repeating: 0.05, count: 20)
-    @State private var countdown = 3
+    @State private var clickEnabled: Bool = false
+    @State private var clickTimeSig: ClickTrackService.TimeSignature = .fourFour
 
     enum Phase {
         case countdown(Int)
@@ -109,10 +111,50 @@ struct OverdubView: View {
                 Spacer()
 
                 if case .recording = phase {
-                    Text("Playing original in headphones")
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
-                        .padding(.bottom, 8)
+                    VStack(spacing: 4) {
+                        Text("Playing original in headphones")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                        if clickEnabled {
+                            Text("Click: \(memo.bpm ?? 120) BPM · \(clickTimeSig.rawValue)")
+                                .font(.caption)
+                                .foregroundStyle(Brand.crimson)
+                        }
+                    }
+                    .padding(.bottom, 8)
+                }
+
+                // Click toggle (only shown before recording starts)
+                if case .countdown = phase {
+                    VStack(spacing: 8) {
+                        Toggle(isOn: $clickEnabled) {
+                            Label("Click track", systemImage: "metronome")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        .tint(Brand.crimson)
+                        .padding(.horizontal)
+
+                        if clickEnabled {
+                            HStack(spacing: 8) {
+                                ForEach(ClickTrackService.TimeSignature.allCases, id: \.self) { sig in
+                                    Button(sig.rawValue) { clickTimeSig = sig }
+                                        .font(.caption)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 4)
+                                        .background(clickTimeSig == sig ? Brand.crimson : Color(.secondarySystemBackground))
+                                        .foregroundStyle(clickTimeSig == sig ? Color.white : Color.secondary)
+                                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                                }
+                                if let bpm = memo.bpm {
+                                    Text("\(bpm) BPM (detected)")
+                                        .font(.caption)
+                                        .foregroundStyle(.tertiary)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.bottom, 8)
                 }
             }
             .padding()
@@ -139,6 +181,9 @@ struct OverdubView: View {
     private func beginRecording() async {
         do {
             try await overdub.start(playing: memo.fileURL)
+            if clickEnabled {
+                click.start(bpm: memo.bpm ?? 120, timeSignature: clickTimeSig)
+            }
             phase = .recording
         } catch {
             phase = .failed(error.localizedDescription)
@@ -146,6 +191,7 @@ struct OverdubView: View {
     }
 
     private func stopAndProcess() {
+        click.stop()
         guard let newLayerURL = overdub.stop() else {
             phase = .failed("No audio was recorded.")
             return

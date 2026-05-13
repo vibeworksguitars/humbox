@@ -3,8 +3,13 @@ import SwiftUI
 struct CaptureView: View {
     @EnvironmentObject private var audio: AudioService
     @EnvironmentObject private var store: StoreService
+    @StateObject private var click = ClickTrackService()
     @State private var showPermissionAlert = false
     @State private var showPaywall = false
+    @State private var showClickSettings = false
+    @State private var clickEnabled = false
+    @State private var clickBPM = 120
+    @State private var clickTimeSig: ClickTrackService.TimeSignature = .fourFour
 
     private var atCap: Bool {
         !store.isPro && audio.memos.count >= StoreService.freeRecordingCap
@@ -50,6 +55,19 @@ struct CaptureView: View {
                     } else {
                         Task { await handleTap() }
                     }
+                }
+
+                // Click track control
+                if !atCap {
+                    ClickTrackControl(
+                        enabled: $clickEnabled,
+                        bpm: $clickBPM,
+                        timeSig: $clickTimeSig,
+                        isRecording: audio.isRecording,
+                        currentBeat: click.currentBeat,
+                        beatsPerBar: clickTimeSig.beatsPerBar
+                    )
+                    .padding(.bottom, 8)
                 }
 
                 Spacer()
@@ -102,9 +120,13 @@ struct CaptureView: View {
     private func handleTap() async {
         if audio.isRecording {
             audio.stopRecording()
+            click.stop()
         } else {
             let granted = await audio.requestMicrophonePermission()
             if granted {
+                if clickEnabled {
+                    click.start(bpm: clickBPM, timeSignature: clickTimeSig)
+                }
                 await audio.startRecording()
             } else {
                 showPermissionAlert = true
@@ -181,6 +203,110 @@ struct WaveformBars: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
+    }
+}
+
+// MARK: - Click Track Control
+
+private struct ClickTrackControl: View {
+    @Binding var enabled: Bool
+    @Binding var bpm: Int
+    @Binding var timeSig: ClickTrackService.TimeSignature
+    let isRecording: Bool
+    let currentBeat: Int
+    let beatsPerBar: Int
+
+    @State private var showPicker = false
+
+    var body: some View {
+        VStack(spacing: 8) {
+            // Beat indicator dots (only visible while recording with click)
+            if isRecording && enabled {
+                HStack(spacing: 8) {
+                    ForEach(0..<beatsPerBar, id: \.self) { i in
+                        Circle()
+                            .fill(i == currentBeat ? Brand.crimson : Color.secondary.opacity(0.3))
+                            .frame(width: i == 0 ? 10 : 7, height: i == 0 ? 10 : 7)
+                            .animation(.easeInOut(duration: 0.05), value: currentBeat)
+                    }
+                }
+            }
+
+            // Toggle pill
+            Button { withAnimation { showPicker = enabled ? false : true; enabled.toggle() } } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "metronome")
+                        .font(.subheadline)
+                    Text(enabled ? "\(bpm) BPM · \(timeSig.rawValue)" : "Click track off")
+                        .font(.subheadline)
+                    Toggle("", isOn: $enabled)
+                        .labelsHidden()
+                        .tint(Brand.crimson)
+                        .scaleEffect(0.8)
+                        .allowsHitTesting(false)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(.regularMaterial, in: Capsule())
+                .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+            .disabled(isRecording)
+
+            // BPM + time sig picker
+            if showPicker && !isRecording {
+                VStack(spacing: 10) {
+                    // Time signature picker
+                    HStack(spacing: 8) {
+                        ForEach(ClickTrackService.TimeSignature.allCases, id: \.self) { sig in
+                            Button(sig.rawValue) { timeSig = sig }
+                                .font(.subheadline)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 6)
+                                .background(timeSig == sig ? Brand.crimson : Color(.secondarySystemBackground))
+                                .foregroundStyle(timeSig == sig ? Color.white : Color.secondary)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                    }
+
+                    // BPM stepper
+                    HStack(spacing: 16) {
+                        Button { bpm = max(40, bpm - 1) } label: {
+                            Image(systemName: "minus.circle")
+                                .font(.title3)
+                                .foregroundStyle(.secondary)
+                        }
+                        Button { bpm = max(40, bpm - 5) } label: {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.title3)
+                                .foregroundStyle(.secondary)
+                        }
+                        Text("\(bpm) BPM")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .frame(width: 80)
+                        Button { bpm = min(240, bpm + 5) } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title3)
+                                .foregroundStyle(.secondary)
+                        }
+                        Button { bpm = min(240, bpm + 1) } label: {
+                            Image(systemName: "plus.circle")
+                                .font(.title3)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .padding(12)
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal)
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
+            }
+        }
+        .onChange(of: enabled) { _, on in
+            if !on { showPicker = false }
         }
     }
 }
