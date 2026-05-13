@@ -7,6 +7,7 @@ struct MemoDetailView: View {
     @State private var playProgress: CGFloat = 0
     @State private var showExportSheet = false
     @State private var showDevelopSheet = false
+    @State private var showOverdubView = false
 
     var body: some View {
         ScrollView {
@@ -93,15 +94,14 @@ struct MemoDetailView: View {
                 // Actions
                 HStack(spacing: 12) {
                     Button {
-                        showDevelopSheet = true
+                        showOverdubView = true
                     } label: {
-                        Label(memo.isDeveloped ? "Developed" : "Develop", systemImage: memo.isDeveloped ? "checkmark.circle.fill" : "checkmark.circle")
+                        Label("Add Layer", systemImage: "waveform.badge.plus")
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(memo.isDeveloped ? Color.secondary : Color.black)
+                            .foregroundStyle(Color.black)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(memo.isDeveloped ? Color(.secondarySystemBackground) : .white)
-                    .disabled(memo.isDeveloped)
+                    .tint(.white)
 
                     Button {
                         showExportSheet = true
@@ -119,14 +119,11 @@ struct MemoDetailView: View {
         .sheet(isPresented: $showExportSheet) {
             ExportSheet(memo: memo)
         }
-        .sheet(isPresented: $showDevelopSheet) {
-            DevelopSheet(memo: memo) { notes in
-                var updated = memo
-                updated.isDeveloped = true
-                updated.developedAt = Date()
-                updated.developmentNotes = notes
-                audio.update(memo: updated)
+        .sheet(isPresented: $showOverdubView) {
+            OverdubView(memo: memo) { layeredMemo in
+                audio.memos.insert(layeredMemo, at: 0)
             }
+            .environmentObject(audio)
         }
     }
 }
